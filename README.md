@@ -22,7 +22,26 @@ You need to add a `local.settings.json` file to your project that looks like the
 
 Normally, you'd want to exclude that from most repos as it might contain database connection strings or other private keys.
 
-This will allow you to run the function app on your local machine.
+This will allow you to run the function app on your local machine. But you need to make sure it is copied to the output folder, so check is that your `.csproj` is modified to include the below:
+
+```
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AzureFunctionsVersion>v4</AzureFunctionsVersion>
+    <OutputType>Exe</OutputType>
+    ...
+  </PropertyGroup>
+    <ItemGroup>
+    <None Update="host.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="local.settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+```
+
+Yes, like I said above, the OutputType is `exe`
 
 ## Ping
 

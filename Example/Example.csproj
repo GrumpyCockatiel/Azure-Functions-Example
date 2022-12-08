@@ -5,7 +5,7 @@
     <OutputType>Exe</OutputType>
     <AssemblyVersion>1.0.*</AssemblyVersion>
     <Deterministic>false</Deterministic>
-    <RootNamespace>Raydreams..API.Example</RootNamespace>
+    <RootNamespace>Raydreams.API.Example</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.14.1" />
