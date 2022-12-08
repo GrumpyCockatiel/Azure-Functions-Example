@@ -14,7 +14,7 @@ using Raydreams.API.Example.Model;
 
 namespace Raydreams.API.Example.Extensions
 {
-    /// <summary></summary>
+    /// <summary>Can't find these enumed in Core.</summary>
     public enum MethodVerb
     {
         HEAD = 0,
@@ -197,7 +197,6 @@ namespace Raydreams.API.Example.Extensions
             HttpResponseData resp = req.CreateResponse(HttpStatusCode.OK);
             resp.Headers.Add("Content-Type", file.ContentType);
             resp.Headers.Add("Content-Disposition", dispo.ToString());
-            //resp.Headers.Add
             resp.WriteBytes(file.Data);
             return resp;
         }

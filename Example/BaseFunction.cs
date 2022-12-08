@@ -15,6 +15,8 @@ namespace Raydreams.API.Example
 		/// <summary>The concrete gateway</summary>
 		private IDataGateway _gate;
 
+        /// <summary></summary>
+        /// <param name="gateway"></param>
 		public BaseFunction(IDataGateway gateway )
 		{
 			_gate = gateway;

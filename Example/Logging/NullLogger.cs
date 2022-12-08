@@ -6,6 +6,7 @@ using System.Transactions;
 
 namespace Raydreams.API.Example
 {
+    /// <summary>Null logger</summary>
     public class NullLogger : ILogger
     {
         public IDisposable BeginScope<TState>(TState state) => default!;

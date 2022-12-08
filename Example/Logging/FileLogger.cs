@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Raydreams.API.Example
 {
-    /// <summary>Provider for logging to Azure Tables</summary>
+    /// <summary>Provider for logging to a physical file</summary>
     public sealed class FileLogProvider : ILoggerProvider
     {
         private string _dir = null;
@@ -142,7 +142,6 @@ namespace Raydreams.API.Example
 
             // convert the args dictionary to a string and add to the end
             if (args != null && args.Length > 0)
-                //sb.AppendFormat( "|args={0}", String.Join( ";", args ) );
                 sb.AppendFormat("{0}{1}", this.Delimiter, String.Join(";", args));
 
             // write log

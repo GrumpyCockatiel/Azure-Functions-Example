@@ -15,6 +15,7 @@ namespace Raydreams.API.Example
         [Function("Ping")]
         public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/ping/{msg?}")] HttpRequestData req, string msg, FunctionContext ctx)
         {
+            // log that this function was triggered
             ILogger logger = ctx.GetLogger("API");
             logger.LogInformation($"{GetType().Name} triggered.");
 

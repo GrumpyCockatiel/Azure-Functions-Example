@@ -7,7 +7,7 @@ using Raydreams.API.Example.Model;
 
 namespace Raydreams.API.Example
 {
-    /// <summary></summary>
+    /// <summary>Gateway Interface</summary>
 	public interface IDataGateway
 	{
         IDataGateway AddHeaders(HttpRequestData req);
@@ -27,6 +27,9 @@ namespace Raydreams.API.Example
 
         #endregion [ Fields ]
 
+        /// <summary></summary>
+        /// <param name="settings"></param>
+        /// <param name="logger"></param>
         public DataGateway( EnvironmentSettings settings, ILogger<DataGateway> logger )
 		{
             this.Config = settings;
@@ -50,11 +53,6 @@ namespace Raydreams.API.Example
         /// <summary>The default logger</summary>
         public ILogger<DataGateway> Logger { get; set; }
 
-        /// <summary>Delegate Function for converting Markdown to HTML. Input string is markdown and return is HTML.</summary>
-        /// <returns>Converted HTML</returns>
-        /// <remarks>Supply your own Markdown conversion routine</remarks>
-        //public Func<string, string> ConvertMarkdown { get; set; }
-
         #endregion [ Properties ]
 
         /// <summary>Allows adding additional headers after the class is created</summary>
@@ -73,16 +71,6 @@ namespace Raydreams.API.Example
             return this;
         }
 
-        /// <summary>Gets the version of THIS assembly</summary>
-        /// <returns></returns>
-        public static string GetVersion()
-        {
-            var name = Assembly.GetExecutingAssembly().GetName();
-            var vers = name.Version;
-
-            return vers.ToString();
-        }
-
         /// <summary>Just returns a simple signature string for testing</summary>
         /// <returns></returns>
         public string Ping(string msg)
@@ -96,7 +84,22 @@ namespace Raydreams.API.Example
             return $"Service : {this.GetType().FullName}; Version : {version}; Env : {this.Config.EnvironmentType}; Message : {msg}";
         }
 
+        /// <summary>A test stub for now where you might call a backend data repo</summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public int GetSomeBackendData(int id) => id;
+
+        /// <summary>Gets the version of THIS assembly</summary>
+        /// <returns></returns>
+        public static string GetVersion()
+        {
+            var name = Assembly.GetExecutingAssembly().GetName();
+            var vers = name.Version;
+
+            return vers.ToString();
+        }
     }
+
+
 }
 
