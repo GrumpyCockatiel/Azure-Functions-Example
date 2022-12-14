@@ -19,7 +19,7 @@ namespace Raydreams.API.Example
         public async Task<HttpResponseData> Run( [HttpTrigger( AuthorizationLevel.Anonymous, "get", Route = "token" )] HttpRequestData req, FunctionContext ctx )
         {
             ILogger logger = ctx.GetLogger( "API" );
-            logger.LogInformation( "Token callback function triggered." );
+            logger.LogInformation( $"{GetType().Name} triggered." );
 
             // the OAuth Code
             string code = req.GetStringValue( "code" );

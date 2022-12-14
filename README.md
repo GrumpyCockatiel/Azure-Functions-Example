@@ -82,6 +82,12 @@ If you open the `Program.cs` file you will see the Dependency Injection. This wo
 
 A .NET Core Function app will run on Windows, Mac or Linux.
 
+## Identity Management
+
+Integration with Auth0 is demoed using a Login API call. You will need to setup your own Auth0 App.
+
+Once a user has a token, that can be returned to the client (stored locally) and sent in the Authorization Header of each subsequent call.
+
 ## Deployment to Azure
 
 The easiest way to deploy is just create a new Azure Function App and Publish from Visual Studio directly. If you save your project to GitHub, you can accept the boilerplate YML script created in Deployment to automatically redeploy after each checkin.

@@ -12,20 +12,6 @@ using System.Threading.Tasks;
 
 namespace Raydreams.API.Example
 {
-    /// <summary>Gateway Interface</summary>
-	public interface IDataGateway
-	{
-        IDataGateway AddHeaders(HttpRequestData req);
-
-        string Login(OAuthState state);
-
-        Task<TokenResponse> GetToken(string code, OAuthState state = null);
-
-        string Ping(string msg);
-
-        int GetSomeBackendData(int id);
-	}
-
     /// <summary></summary>
 	public class DataGateway : IDataGateway
 	{
@@ -162,7 +148,11 @@ namespace Raydreams.API.Example
         /// <summary>A test stub for now where you might call a backend data repo</summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public int GetSomeBackendData(int id) => id;
+        /// <summary></summary>
+        public async Task<IEnumerable<WeatherForecast>> GetWeather( DateOnly day )
+        {
+            return await new WeatherForecastService().GetForecastAsync(day);
+        }
 
         /// <summary>Gets the version of THIS assembly</summary>
         /// <returns></returns>

@@ -36,7 +36,7 @@ namespace Raydreams.API.Example.Data
         public string Login( string url ) => $"{TenantURL}/authorize?client_id={ClientID}&redirect_uri={url}&response_type=code&scope=openid%20profile%20email%20offline_access";
 
         /// <summary>Logout URL</summary>
-        public string Logout => $"{TenantURL}/v2/logout";
+        public string Logout => $"{TenantURL}/v2/logout&client_id={this.ClientID}&returnTo=";
 
         /// <summary>Gets a token</summary>
         /// <param name="path"></param>
@@ -107,15 +107,15 @@ namespace Raydreams.API.Example.Data
         /// <returns></returns>
         //public async Task<bool> Logout()
         //{
-        //    HttpRequestMessage message = new HttpRequestMessage( HttpMethod.Get, $"{TenantURL}/v2/logout&client_id={clientID}&returnTo=" );
+        //    HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, $"{TenantURL}/v2/logout&client_id={this.ClientID}&returnTo=");
         //    message.Headers.Clear();
 
         //    try
         //    {
-        //        HttpResponseMessage httpResponse = await new HttpClient().SendAsync( message ); ;
+        //        HttpResponseMessage httpResponse = await new HttpClient().SendAsync(message); ;
         //        string response = await httpResponse.Content.ReadAsStringAsync();
         //    }
-        //    catch ( System.Exception )
+        //    catch (System.Exception)
         //    {
         //        return false;
         //    }

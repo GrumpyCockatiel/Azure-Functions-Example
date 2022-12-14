@@ -19,7 +19,7 @@ namespace Raydreams.API.Example
 				.ConfigureLogging(log =>
 				{
 					log.ClearProviders();
-					// you can use Azure Table Logging if you put in a Data Account Connection string
+					// you can use Azure Table Logging or other custom logger if you put in a Connection string
 					//log.AddProvider(new AzureTableLoggerProvider( env.ConnectionString) );
                     log.AddProvider( new NullLoggerProvider() );
                 })

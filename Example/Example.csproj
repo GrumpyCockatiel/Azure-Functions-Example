@@ -20,6 +20,7 @@
     <None Remove="Extensions\" />
     <None Remove="Model\" />
     <None Remove="Data\" />
+    <None Remove="Interface\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
@@ -33,5 +34,6 @@
     <Folder Include="Extensions\" />
     <Folder Include="Model\" />
     <Folder Include="Data\" />
+    <Folder Include="Interface\" />
   </ItemGroup>
 </Project>

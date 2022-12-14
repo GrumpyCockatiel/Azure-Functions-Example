@@ -24,7 +24,7 @@ namespace Raydreams.API.Example
         public HttpResponseData Run( [HttpTrigger( AuthorizationLevel.Anonymous, "get", Route = "login/{id?}" )] HttpRequestData req, string id, FunctionContext ctx )
         {
             ILogger logger = ctx.GetLogger( "API" );
-            logger.LogInformation( "Login function triggered." );
+            logger.LogInformation( $"{GetType().Name} triggered." );
 
             APIResult<string> results = new APIResult<string>();
 
