@@ -15,6 +15,21 @@ namespace Raydreams.API.Example.Model
         /// <summary></summary>
         public static readonly string ConnectionStringKey = "connStr";
 
+        /// <summary></summary>
+        public static readonly string CallbackURLKey = "callback";
+
+        /// <summary></summary>
+        public static readonly string ClientIDKey = "clientID";
+
+        /// <summary></summary>
+        public static readonly string ClientSecretKey = "clientSecret";
+
+        /// <summary></summary>
+        public static readonly string TenantURLKey = "tenant";
+
+        /// <summary></summary>
+        public static readonly string PortKey = "port";
+
         #endregion [ Config Keys ]
 
         /// <summary>Main constructor loads Config settings</summary>
@@ -22,6 +37,11 @@ namespace Raydreams.API.Example.Model
         {
             // load client details
             this.ConnectionString = Environment.GetEnvironmentVariable(ConnectionStringKey);
+            this.CallbackURL = Environment.GetEnvironmentVariable( CallbackURLKey );
+            this.IDClientID = Environment.GetEnvironmentVariable( ClientIDKey );
+            this.IDClientSecret = Environment.GetEnvironmentVariable( ClientSecretKey );
+            this.TenantURL = Environment.GetEnvironmentVariable( TenantURLKey );
+            this.DefaultPort = Environment.GetEnvironmentVariable( PortKey ).GetIntValue(50001);
         }
 
         /// <summary>Gets environment settings from a string based on the enum value</summary>
@@ -64,6 +84,21 @@ namespace Raydreams.API.Example.Model
 
         /// <summary>The connection string to the Storage Account</summary>
         public string ConnectionString { get; set; }
+
+        /// <summary>The login callback URL</summary>
+        public string CallbackURL { get; set; } = "http://localhost:7071/api/token";
+
+        /// <summary></summary>
+        public string IDClientSecret { get; set; } = String.Empty;
+
+        /// <summary></summary>
+        public string IDClientID { get; set; } = String.Empty;
+
+        /// <summary></summary>
+        public string TenantURL { get; set; } = String.Empty;
+
+        /// <summary>Default port to send back to the client</summary>
+        public int DefaultPort { get; set; } = 50001;
 
         #endregion [ Properties ]
 

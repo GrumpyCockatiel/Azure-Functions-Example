@@ -4,6 +4,11 @@ using Microsoft.Extensions.Logging;
 using System.Reflection;
 using Raydreams.API.Example.Extensions;
 using Raydreams.API.Example.Model;
+using System.Collections.Generic;
+using System.Net;
+using System.Text;
+using Raydreams.API.Example.Data;
+using System.Threading.Tasks;
 
 namespace Raydreams.API.Example
 {
@@ -11,6 +16,10 @@ namespace Raydreams.API.Example
 	public interface IDataGateway
 	{
         IDataGateway AddHeaders(HttpRequestData req);
+
+        string Login(OAuthState state);
+
+        Task<TokenResponse> GetToken(string code, OAuthState state = null);
 
         string Ping(string msg);
 
@@ -34,7 +43,8 @@ namespace Raydreams.API.Example
 		{
             this.Config = settings;
             this.Logger = logger;
-		}
+            this.AuthManager = new Auth0Manager(this.Config.IDClientID, this.Config.IDClientSecret, this.Config.TenantURL);
+        }
 
         #region [ Properties ]
 
@@ -49,6 +59,9 @@ namespace Raydreams.API.Example
 
         /// <summary></summary>
         protected EnvironmentSettings Config { get; set; }
+
+        /// <summary></summary>
+        protected Auth0Manager AuthManager { get; set; }
 
         /// <summary>The default logger</summary>
         public ILogger<DataGateway> Logger { get; set; }
@@ -69,6 +82,68 @@ namespace Raydreams.API.Example
             this.RequestedURL = req.Url;
 
             return this;
+        }
+
+        /// <summary>Gets the Autodesk Login URL append with the encoded state values </summary>
+        /// <param name="state">An OAuth State object to remember various things including scope and App ID</param>
+        public string Login( OAuthState state )
+        {
+            this.Logger.LogInformation($"Request for login");
+
+            // get the base login URL
+            StringBuilder sb = new StringBuilder( this.AuthManager.Login( this.Config.CallbackURL ) );
+
+            // add the encoded state
+            sb.AppendFormat( "&state={0}", state.Encode() );
+
+            // modify the scopes
+            //this.AuthManager.FormatScopes( scopes );
+
+            return sb.ToString();
+        }
+
+        /// <summary>Returns the Autodesk Logout URL to the browser to force a logout</summary>
+        public string Logout()
+        {
+            //this.Log( $"Request for logout", LogLevel.Info, "Security" );
+
+            return this.AuthManager.Logout;
+        }
+
+        /// <summary>Using the login code gets the users final JWT</summary>
+        /// <param name="code"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        public async Task<TokenResponse> GetToken( string code, OAuthState state = null )
+        {
+            if (String.IsNullOrWhiteSpace(code))
+                return null;
+
+            // get the token from the ID Manager
+            Auth0Token results = await this.AuthManager.GetToken( code, this.Config.CallbackURL );
+
+            // validate the reponse
+            if ( results == null || String.IsNullOrWhiteSpace( results.Access ) )
+                return null;
+
+            // now get the user info
+            Auth0User user = await this.AuthManager.GetUserInfo( results.Access );
+
+            // at this point we need to store the client's IP, ID and all the response token details
+            //IClientLoginRepository repo = ClientLoginFactory.Make( this.Config.ConnectionString );
+
+            // make a token
+            TokenResponse token = new TokenResponse
+            {
+                Token = results.Access,
+                UserID = user?.Email,
+                RefreshToken = results.Refresh,
+                Expires = results.ExpiresOn
+            };
+
+            return token;
+
+            //return (APIResultType.InvalidAppID, token);
         }
 
         /// <summary>Just returns a simple signature string for testing</summary>

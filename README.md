@@ -15,12 +15,19 @@ You need to add a `local.settings.json` file to your project that looks like the
         "AzureWebJobsStorage": "UseDevelopmentStorage=true",
         "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
         "ASPNETCORE_ENVIRONMENT": "Local",
-        "connStr": "my data connection string"
+        "connStr": "my data connection string",
+        "callback": "http://localhost:50002/api/token",
+        "clientID": "<My Auth0 App Client ID>",
+        "clientSecret": "<My Auth0 App Client Secret>",
+        "tenant": "<My Auth0 Tenant>",
+        "port": "50002"
     }
 }
 ```
 
 Normally, you'd want to exclude that from most repos as it might contain database connection strings or other private keys.
+
+**NEVER PUT Secrets or Private Keys in an end user client** even hardcoded and BASE64 encoded.
 
 This will allow you to run the function app on your local machine. But you need to make sure it is copied to the output folder, so check is that your `.csproj` is modified to include the below:
 
