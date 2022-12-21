@@ -30,6 +30,12 @@ namespace Raydreams.API.Example.Model
         /// <summary></summary>
         public static readonly string PortKey = "port";
 
+        /// <summary></summary>
+        public static readonly string FileStoreKey = "fileStore";
+
+        /// <summary></summary>
+        public static readonly string ContainerKey = "defaultContainer";
+
         #endregion [ Config Keys ]
 
         /// <summary>Main constructor loads Config settings</summary>
@@ -42,6 +48,8 @@ namespace Raydreams.API.Example.Model
             this.IDClientSecret = Environment.GetEnvironmentVariable( ClientSecretKey );
             this.TenantURL = Environment.GetEnvironmentVariable( TenantURLKey );
             this.DefaultPort = Environment.GetEnvironmentVariable( PortKey ).GetIntValue(50001);
+            this.FileStore = Environment.GetEnvironmentVariable( FileStoreKey );
+            this.DefaultContainer = Environment.GetEnvironmentVariable( ContainerKey );
         }
 
         /// <summary>Gets environment settings from a string based on the enum value</summary>
@@ -99,6 +107,12 @@ namespace Raydreams.API.Example.Model
 
         /// <summary>Default port to send back to the client</summary>
         public int DefaultPort { get; set; } = 50001;
+
+        /// <summary></summary>
+        public string FileStore { get; set; } = String.Empty;
+
+        /// <summary></summary>
+        public string DefaultContainer { get; set; } = String.Empty;
 
         #endregion [ Properties ]
 

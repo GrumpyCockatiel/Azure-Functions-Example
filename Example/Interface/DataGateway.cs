@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using Raydreams.API.Example.Data;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Raydreams.API.Example
 {
@@ -143,6 +144,22 @@ namespace Raydreams.API.Example
 
             // create the signature
             return $"Service : {this.GetType().FullName}; Version : {version}; Env : {this.Config.EnvironmentType}; Message : {msg}";
+        }
+
+        /// <summary></summary>
+        /// <param name="fs"></param>
+        /// <param name="container"></param>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        public async Task<string> InsertFile( Stream fs, string filename )
+        {
+            AzureBlobRepository repo = new AzureBlobRepository(this.Config.FileStore)
+            {
+                GetMimeType = MimeTypeMap.GetMimeType
+            };
+            var results = await repo.StreamBlob( fs, this.Config.DefaultContainer, filename.Trim() );
+
+            return results;
         }
 
         /// <summary>A test stub for now where you might call a backend data repo</summary>

@@ -3,6 +3,7 @@ using Microsoft.Azure.Functions.Worker.Http;
 using Raydreams.API.Example.Model;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Raydreams.API.Example
 {
@@ -26,5 +27,8 @@ namespace Raydreams.API.Example
 
         /// <summary></summary>
         Task<IEnumerable<WeatherForecast>> GetWeather( DateOnly day );
+
+        /// <summary></summary>
+        Task<string> InsertFile( Stream fs, string filename );
     }
 }
