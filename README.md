@@ -20,7 +20,9 @@ You need to add a `local.settings.json` file to your project that looks like the
         "clientID": "<My Auth0 App Client ID>",
         "clientSecret": "<My Auth0 App Client Secret>",
         "tenant": "<My Auth0 Tenant>",
-        "port": "50002"
+        "port": "50002",
+        "fileStore": "Azure Storage Connection String",
+        "defaultContainer": "myBlobs"
     }
 }
 ```
@@ -48,7 +50,9 @@ This will allow you to run the function app on your local machine. But you need 
   </ItemGroup>
 ```
 
-Yes, like I said above, the OutputType is `exe`
+Yes, like I said above, the OutputType is `exe`.
+
+You can run the functions locally and then test them with Postman. If you install Azurite, you can test uploading files to Azure Blobs.
 
 ## Ping
 
@@ -97,3 +101,7 @@ The easiest way to deploy is just create a new Azure Function App and Publish fr
 Environment Settings will load the Configuration values by key name into an instance of this class. These values should rarely if ever change and only vary by deloyment environment. For more configurable Settings - use a data store.
 
 In the Azure Function resource go to Configuration and add any environment vaiables you need. Then modify EnvironmentSettings.cs to match you settings.
+
+## Azurite
+
+Azurite is very useful to do local debugging. I'll add how to set it up here but the VS Code extension has all the directions.
