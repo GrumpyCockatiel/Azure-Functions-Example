@@ -54,7 +54,9 @@ Yes, like I said above, the OutputType is `exe`.
 
 You can run the functions locally and then test them with Postman. If you install Azurite, you can test uploading files to Azure Blobs.
 
-## Ping
+## Example API Methods
+
+### Ping
 
 Your APIs should always include a Ping or Echo or Signature method, preferably set to Anonymous using GET with no required input.
 This helps in troubleshooting the API and just make sure it is up and responding.
@@ -62,6 +64,7 @@ Of course, you can make the method fancier and return more details about the env
 
 This example includes a single Ping with the endpoint
 ```
+GET
 http://localhost:7071/api/v1/ping/{optional message}
 ```
 Of course, your local port may vary depening on the settings in the project.
@@ -77,6 +80,17 @@ A common questions is can you remove or change the default base path of the APIs
 ```
 
 This will remove the `api` part of the route from all your calls.
+
+### Insert File
+
+Upload a file to Azure Blob Storage
+
+```
+POST
+http://localhost:7071/api/v1/file/{fileName?}
+```
+
+The body of the post request is the raw file bytes and `filename` is the original file name or at least the file name you want to store in the metadata for when it is later downloaded. You can of course use just the orginal or generate a new one. This method is going to generate a random code for the actual blob name.
 
 ## Program.cs
 
