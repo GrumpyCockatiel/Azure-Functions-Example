@@ -26,9 +26,10 @@ namespace Raydreams.API.Example
         /// <summary></summary>
         /// <param name="settings"></param>
         /// <param name="logger"></param>
-        public DataGateway( EnvironmentSettings settings, ILogger<DataGateway> logger )
+        public DataGateway( EnvironmentSettings settings, IForecastService gateway, ILogger<DataGateway> logger )
 		{
             this.Config = settings;
+            this.WeatherGateway = gateway;
             this.Logger = logger;
             this.AuthManager = new Auth0Manager(this.Config.IDClientID, this.Config.IDClientSecret, this.Config.TenantURL);
         }
@@ -49,6 +50,9 @@ namespace Raydreams.API.Example
 
         /// <summary></summary>
         protected Auth0Manager AuthManager { get; set; }
+
+        // <summary></summary>
+        protected IForecastService WeatherGateway { get; set; }
 
         /// <summary>The default logger</summary>
         public ILogger<DataGateway> Logger { get; set; }
@@ -166,9 +170,9 @@ namespace Raydreams.API.Example
         /// <param name="id"></param>
         /// <returns></returns>
         /// <summary></summary>
-        public async Task<IEnumerable<WeatherForecast>> GetWeather( DateOnly day )
+        public async Task<IEnumerable<ForecastDTO>> GetWeather()
         {
-            return await new WeatherForecastService().GetForecastAsync(day);
+            return await this.WeatherGateway.GetForecastAsync();
         }
 
         /// <summary>Gets the version of THIS assembly</summary>

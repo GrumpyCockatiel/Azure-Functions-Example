@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Raydreams.API.Example.Data;
 using Raydreams.API.Example.Model;
 
 namespace Raydreams.API.Example
@@ -25,6 +26,7 @@ namespace Raydreams.API.Example
                 })
 				.ConfigureServices( (ctx, services) => {
                     services.AddSingleton<EnvironmentSettings>(env);
+                    services.AddScoped<IForecastService, NWSForecastService>( s => new NWSForecastService { Station = "HGX", Grid = "65,97" } );
                     services.AddScoped<IDataGateway, DataGateway>();
                 } )
 				.Build();

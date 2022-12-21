@@ -26,7 +26,7 @@ namespace Raydreams.API.Example
         string Ping( string msg );
 
         /// <summary></summary>
-        Task<IEnumerable<WeatherForecast>> GetWeather( DateOnly day );
+        Task<IEnumerable<ForecastDTO>> GetWeather();
 
         /// <summary></summary>
         Task<string> InsertFile( Stream fs, string filename );

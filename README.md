@@ -81,6 +81,18 @@ A common questions is can you remove or change the default base path of the APIs
 
 This will remove the `api` part of the route from all your calls.
 
+### Get Forecast
+
+An example of pulling data from the backend where that could be a 3rd Pary API, a physical data store, a file in a cloud drive... whatever.
+
+```
+GET
+http://localhost:7071/api/v1/forecast
+```
+
+The Mock Service generates random data while the NWS live service will pull data for a hard coded location **HGX/65,97**
+Of course, you can make the location a parameter itself.
+
 ### Insert File
 
 Upload a file to Azure Blob Storage
