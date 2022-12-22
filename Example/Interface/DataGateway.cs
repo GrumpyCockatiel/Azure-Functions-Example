@@ -152,9 +152,13 @@ namespace Raydreams.API.Example
         {
             AzureBlobRepository repo = new AzureBlobRepository(this.Config.FileStore)
             {
+                // set a delegate on how to resolve the MIME Type
                 GetMimeType = MimeTypeMap.GetMimeType
             };
 
+            // should test to see if we can connect first
+
+            // upload the blob
             string url = await repo.StreamBlob( fs, this.Config.DefaultContainer, filename.Trim() );
 
             this.Logger.LogInformation( $"Inserted new file {url}." );
