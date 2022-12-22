@@ -21,8 +21,10 @@ namespace Raydreams.API.Example
 				{
 					log.ClearProviders();
 					// you can use Azure Table Logging or other custom logger if you put in a Connection string
-					//log.AddProvider(new AzureTableLoggerProvider( env.ConnectionString) );
-                    log.AddProvider( new NullLoggerProvider() );
+					if ( String.IsNullOrWhiteSpace(env.ConnectionString) )
+                        log.AddProvider( new NullLoggerProvider() );
+					else
+						log.AddProvider(new AzureTableLoggerProvider( env.ConnectionString) );
                 })
 				.ConfigureServices( (ctx, services) => {
                     services.AddSingleton<EnvironmentSettings>(env);

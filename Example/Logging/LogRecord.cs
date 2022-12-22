@@ -6,8 +6,8 @@ using Raydreams.API.Example.Extensions;
 
 namespace Raydreams.API.Example
 {
-    /// <summary>Encapsulate all log information into a single object</summary>
-    /// <remarks>Designed to work with it without Azure Tables</remarks>
+    /// <summary>Encapsulate all log information into a single class to write to a data store</summary>
+    /// <remarks>Designed to work with and without Azure Tables</remarks>
     public class LogRecord : ITableEntity
     {
         private Guid _id;

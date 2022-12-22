@@ -131,3 +131,5 @@ In the Azure Function resource go to Configuration and add any environment vaiab
 ## Azurite
 
 Azurite is very useful to do local debugging. I'll add how to set it up here but the VS Code extension has all the directions.
+
+Figuring out the connection string for local Azurite can be found [near the bottom of the MSDN](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio).

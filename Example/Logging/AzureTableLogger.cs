@@ -13,6 +13,7 @@ namespace Raydreams.API.Example
     {
         private string _connStr = null;
 
+		// assumes the table name is 'Logs'
         public AzureTableLoggerProvider(string connStr)
         {
             this._connStr = connStr;
