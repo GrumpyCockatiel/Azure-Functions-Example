@@ -92,9 +92,10 @@ namespace Raydreams.API.Example.Data
 				TableOperation op = TableOperation.InsertOrMerge( item );
 				results = this.AzureTable.ExecuteAsync( op ).GetAwaiter().GetResult();
 			}
-			catch ( System.Exception exp )
+			catch ( System.Exception )
 			{
-				; // log it somehow and keep going
+				// can't log if the logger failed
+				return 500;
 			}
 
 			return results.HttpStatusCode;
@@ -117,10 +118,11 @@ namespace Raydreams.API.Example.Data
 					TableOperation op = TableOperation.InsertOrMerge( item );
 					results = this.AzureTable.ExecuteAsync( op ).GetAwaiter().GetResult();
 				}
-				catch ( System.Exception exp )
+				catch ( System.Exception )
 				{
-					; // log it somehow and keep going
-				}
+                    // can't log if the logger failed
+                    return 500;
+                }
 			}
 
 			return results.HttpStatusCode;
