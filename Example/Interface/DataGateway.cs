@@ -1,15 +1,8 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
-using System.Reflection;
-using Raydreams.API.Example.Extensions;
-using Raydreams.API.Example.Model;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
-using Raydreams.API.Example.Data;
-using System.Threading.Tasks;
-using System.IO;
 
 namespace Raydreams.API.Example
 {
@@ -79,7 +72,7 @@ namespace Raydreams.API.Example
         /// <param name="state">An OAuth State object to remember various things including scope and App ID</param>
         public string Login( OAuthState state )
         {
-            this.Logger.LogInformation($"Request for login");
+            this.Logger.LogInformation( $"Request for login" );
 
             // get the base login URL
             StringBuilder sb = new StringBuilder( this.AuthManager.Login( this.Config.CallbackURL ) );
@@ -96,7 +89,7 @@ namespace Raydreams.API.Example
         /// <summary>Returns the Autodesk Logout URL to the browser to force a logout</summary>
         public string Logout()
         {
-            //this.Log( $"Request for logout", LogLevel.Info, "Security" );
+            this.Logger.LogInformation( $"Request for logout" );
 
             return this.AuthManager.Logout;
         }
@@ -141,7 +134,7 @@ namespace Raydreams.API.Example
         /// <returns></returns>
         public string Ping(string msg)
         {
-            this.Logger.LogInformation($"Pinged = {msg}");
+            this.Logger.LogInformation( $"Pinged = {msg}", $"ip={ClientIP}" );
 
             // default values
             string version = GetVersion();
@@ -161,9 +154,12 @@ namespace Raydreams.API.Example
             {
                 GetMimeType = MimeTypeMap.GetMimeType
             };
-            var results = await repo.StreamBlob( fs, this.Config.DefaultContainer, filename.Trim() );
 
-            return results;
+            string url = await repo.StreamBlob( fs, this.Config.DefaultContainer, filename.Trim() );
+
+            this.Logger.LogInformation( $"Inserted new file {url}." );
+
+            return url;
         }
 
         /// <summary>A test stub for now where you might call a backend data repo</summary>
@@ -172,6 +168,8 @@ namespace Raydreams.API.Example
         /// <summary></summary>
         public async Task<IEnumerable<ForecastDTO>> GetWeather()
         {
+            this.Logger.LogInformation( $"Request for weather forecast" );
+
             return await this.WeatherGateway.GetForecastAsync();
         }
 

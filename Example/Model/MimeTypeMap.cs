@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Raydreams.API.Example.Model
+﻿namespace Raydreams.API.Example.Model
 {
     /// <summary>Maps extensions to Mime Types</summary>
     /// <remarks>Modify the mime types list to support your file types</remarks>

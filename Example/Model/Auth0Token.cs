@@ -1,6 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
-using Raydreams.API.Example.Extensions;
+﻿using Newtonsoft.Json;
 
 namespace Raydreams.API.Example.Model
 {

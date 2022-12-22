@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Raydreams.API.Example.Model
 {
@@ -22,4 +21,3 @@ namespace Raydreams.API.Example.Model
         Production = 10
     }
 }
-

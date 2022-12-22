@@ -1,8 +1,5 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System.Text;
-using Raydreams.API.Example.Extensions;
 
 namespace Raydreams.API.Example.Model
 {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Raydreams.API.Example.Model
+﻿namespace Raydreams.API.Example.Model
 {
     /// <summary>Groups combinations of character sets</summary>
     [FlagsAttribute]

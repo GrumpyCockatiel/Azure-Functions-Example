@@ -1,12 +1,5 @@
-﻿using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 using Newtonsoft.Json;
-using Raydreams.API.Example.Model;
-//using Microsoft.AspNetCore.Identity;
 
 namespace Raydreams.API.Example.Data
 {

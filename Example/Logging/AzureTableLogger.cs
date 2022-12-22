@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.Azure.Cosmos.Table;
-using System.Linq;
+﻿using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Logging;
-using Raydreams.API.Example.Data;
 
 namespace Raydreams.API.Example
 {

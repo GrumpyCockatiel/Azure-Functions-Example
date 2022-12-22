@@ -1,8 +1,6 @@
 ﻿using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
-using Raydreams.API.Example.Extensions;
-using Raydreams.API.Example.Model;
 
 namespace Raydreams.API.Example
 {

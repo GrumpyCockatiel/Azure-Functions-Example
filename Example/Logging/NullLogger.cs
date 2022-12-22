@@ -1,8 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Transactions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Raydreams.API.Example
 {
@@ -22,9 +21,9 @@ namespace Raydreams.API.Example
         }
     }
 
+    /// <summary>A Null Logger</summary>
     public sealed class NullLoggerProvider : ILoggerProvider
     {
-
         public NullLoggerProvider()
         {
         }

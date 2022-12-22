@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Text;
-using Raydreams.API.Example.Model;
+﻿using System.Security.Cryptography;
 
 namespace Raydreams.API.Example.Logic
 {
+    /// <summary>Inits a randomizer and has several methods for creating random things</summary>
 	public class Randomizer
 	{
         /// <summary></summary>
@@ -55,6 +50,28 @@ namespace Raydreams.API.Example.Logic
             return this._rand.Next( minValue, maxValue );
         }
 
+        /// <summary>Generates a random character code using upper and lower case and all digits</summary>
+        public string RandomCode( int len = 10, CharGroup set = CharGroup.Lower | CharGroup.Upper | CharGroup.Digits )
+        {
+            if ( len < 1 )
+                len = 1;
+
+            if ( len > 1024 )
+                len = 1024;
+
+            char[] chars = this.MakeCharSet( set );
+
+            if ( chars.Length < 1 )
+                return String.Empty;
+
+            StringBuilder results = new StringBuilder();
+
+            for ( int i = 0; i < len; ++i )
+                results.Append( chars[this._rand.Next( 0, chars.Length )] );
+
+            return results.ToString();
+        }
+
         /// <summary>Generates a list of characters to choose from the specified sets</summary>
         /// <param name="set"></param>
         /// <returns></returns>
@@ -93,28 +110,6 @@ namespace Raydreams.API.Example.Logic
             }
 
             return all.ToArray();
-        }
-
-        /// <summary>Generates a random character code using upper and lower case and all digits</summary>
-        public string RandomCode( int len = 10, CharGroup set = CharGroup.Lower | CharGroup.Upper | CharGroup.Digits )
-        {
-            if ( len < 1 )
-                len = 1;
-
-            if ( len > 1024 )
-                len = 1024;
-
-            char[] chars = this.MakeCharSet( set );
-
-            if ( chars.Length < 1 )
-                return String.Empty;
-
-            StringBuilder results = new StringBuilder();
-
-            for ( int i = 0; i < len; ++i )
-                results.Append( chars[this._rand.Next( 0, chars.Length )] );
-
-            return results.ToString();
         }
     }
 }

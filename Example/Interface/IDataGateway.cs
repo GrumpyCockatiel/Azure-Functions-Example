@@ -1,9 +1,6 @@
 ﻿using System;
-using Microsoft.Azure.Functions.Worker.Http;
-using Raydreams.API.Example.Model;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.IO;
+using Microsoft.Azure.Functions.Worker.Http;
 
 namespace Raydreams.API.Example
 {

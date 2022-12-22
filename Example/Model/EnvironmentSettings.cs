@@ -1,9 +1,6 @@
-﻿using System;
-using Raydreams.API.Example.Extensions;
-
-namespace Raydreams.API.Example.Model
+﻿namespace Raydreams.API.Example.Model
 {
-    /// <summary>Encapsulates the settings are various environments.</summary>
+    /// <summary>Encapsulates the settings on various environments.</summary>
     public class EnvironmentSettings
     {
         // These match to the keys in the Azure Function Configuation section or local.settings
@@ -41,7 +38,7 @@ namespace Raydreams.API.Example.Model
         /// <summary>Main constructor loads Config settings</summary>
         public EnvironmentSettings()
         {
-            // load client details
+            // load settings
             this.ConnectionString = Environment.GetEnvironmentVariable(ConnectionStringKey);
             this.CallbackURL = Environment.GetEnvironmentVariable( CallbackURLKey );
             this.IDClientID = Environment.GetEnvironmentVariable( ClientIDKey );

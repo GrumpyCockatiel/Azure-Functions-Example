@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using Microsoft.Extensions.Logging;
 
 namespace Raydreams.API.Example
@@ -115,9 +113,6 @@ namespace Raydreams.API.Example
         {
             StringBuilder sb = new StringBuilder(DateTime.UtcNow.ToString("s"));
             sb.Append(this.Delimiter);
-
-            //if (lvl < this.Level)
-                //return false;
 
             // make sure the parent dir exists
             if (!this.Path.Exists)

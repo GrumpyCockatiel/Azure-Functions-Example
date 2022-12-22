@@ -1,9 +1,6 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Raydreams.API.Example.Data;
-using Raydreams.API.Example.Model;
 
 namespace Raydreams.API.Example
 {
@@ -27,6 +24,7 @@ namespace Raydreams.API.Example
 						log.AddProvider(new AzureTableLoggerProvider( env.ConnectionString) );
                 })
 				.ConfigureServices( (ctx, services) => {
+					// add the Settings as a singleton
                     services.AddSingleton<EnvironmentSettings>(env);
                     services.AddScoped<IForecastService, NWSForecastService>( s => new NWSForecastService { Station = "HGX", Grid = "65,97" } );
                     services.AddScoped<IDataGateway, DataGateway>();

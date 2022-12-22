@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Raydreams.API.Example.Model
+﻿namespace Raydreams.API.Example.Model
 {
 	/// <summary>Status Result codes for API calls</summary>
 	/// <remarks>This is an enumeration of everything I use for now. The list only grows.</remarks>

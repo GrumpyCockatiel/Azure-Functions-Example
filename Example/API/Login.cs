@@ -1,13 +1,6 @@
-﻿using System;
-using System.Net;
-using System.Text;
-using Microsoft.Azure.Functions.Worker;
+﻿using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.OData.Edm;
-using Newtonsoft.Json;
-using Raydreams.API.Example.Extensions;
-using Raydreams.API.Example.Model;
 
 namespace Raydreams.API.Example
 {

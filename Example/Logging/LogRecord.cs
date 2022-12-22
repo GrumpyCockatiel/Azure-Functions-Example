@@ -1,8 +1,5 @@
-﻿using System;
-using Microsoft.Azure.Cosmos.Table;
-using System.Collections.Generic;
+﻿using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Logging;
-using Raydreams.API.Example.Extensions;
 
 namespace Raydreams.API.Example
 {

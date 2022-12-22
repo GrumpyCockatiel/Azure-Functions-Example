@@ -1,16 +1,9 @@
 ﻿using System;
+using System.Net.Mime;
+using System.Web;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Drawing;
-using System.Net;
-using System.Net.Mime;
-using System.Text;
-using System.Web;
-using System.Linq;
-using Raydreams.API.Example.Model;
 
 namespace Raydreams.API.Example.Extensions
 {

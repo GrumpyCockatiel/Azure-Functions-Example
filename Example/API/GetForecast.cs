@@ -1,13 +1,6 @@
-﻿using System;
-using System.Net;
-using System.Threading.Tasks;
-using System.Linq;
-using Microsoft.Azure.Functions.Worker;
+﻿using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
-using Raydreams.API.Example.Extensions;
-using Raydreams.API.Example.Model;
-using System.Collections.Generic;
 
 namespace Raydreams.API.Example
 {

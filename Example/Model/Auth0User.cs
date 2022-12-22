@@ -1,5 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Security.Claims;
 
 namespace Raydreams.API.Example.Model
