@@ -149,6 +149,9 @@ namespace Raydreams.API.Example
 			this.InsertLog(logLevel, null, state.ToString(), null );
         }
 
+		/// <summary>All log levels enabled</summary>
+		/// <param name="logLevel"></param>
+		/// <returns></returns>
         public bool IsEnabled(LogLevel logLevel)
         {
 			return true;

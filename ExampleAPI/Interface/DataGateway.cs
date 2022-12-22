@@ -68,6 +68,21 @@ namespace Raydreams.API.Example
             return this;
         }
 
+        #region [ API Methods ]
+
+        /// <summary>Just returns a simple signature string for testing</summary>
+        /// <returns></returns>
+        public string Ping( string msg )
+        {
+            this.Logger.LogInformation( $"Pinged = {msg}", $"ip={ClientIP}" );
+
+            // default values
+            string version = GetVersion();
+
+            // create the signature
+            return $"Service : {this.GetType().FullName}; Version : {version}; Env : {this.Config.EnvironmentType}; Message : {msg}";
+        }
+
         /// <summary>Gets the Autodesk Login URL append with the encoded state values </summary>
         /// <param name="state">An OAuth State object to remember various things including scope and App ID</param>
         public string Login( OAuthState state )
@@ -130,19 +145,6 @@ namespace Raydreams.API.Example
             //return (APIResultType.InvalidAppID, token);
         }
 
-        /// <summary>Just returns a simple signature string for testing</summary>
-        /// <returns></returns>
-        public string Ping(string msg)
-        {
-            this.Logger.LogInformation( $"Pinged = {msg}", $"ip={ClientIP}" );
-
-            // default values
-            string version = GetVersion();
-
-            // create the signature
-            return $"Service : {this.GetType().FullName}; Version : {version}; Env : {this.Config.EnvironmentType}; Message : {msg}";
-        }
-
         /// <summary></summary>
         /// <param name="fs"></param>
         /// <param name="container"></param>
@@ -177,9 +179,11 @@ namespace Raydreams.API.Example
             return await this.WeatherGateway.GetForecastAsync();
         }
 
+        #endregion [ API Methods ]
+
         /// <summary>Gets the version of THIS assembly</summary>
         /// <returns></returns>
-        public static string GetVersion()
+        protected static string GetVersion()
         {
             var name = Assembly.GetExecutingAssembly().GetName();
             var vers = name.Version;
@@ -187,7 +191,6 @@ namespace Raydreams.API.Example
             return vers.ToString();
         }
     }
-
 
 }
 
