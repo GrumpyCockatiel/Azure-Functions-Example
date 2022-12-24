@@ -8,13 +8,20 @@ namespace Raydreams.API.Example
     {
         private string _connStr = null;
 
-		// assumes the table name is 'Logs'
-        public AzureTableLoggerProvider(string connStr)
+        private string _source = null;
+
+        // assumes the table name is 'Logs'
+        public AzureTableLoggerProvider(string connStr, string source = null)
         {
             this._connStr = connStr;
+			this._source = source;
         }
 
-        public ILogger CreateLogger(string categoryName) => new AzureTableLogger(this._connStr);
+        /// <summary>ILoggerProvider</summary>
+        public ILogger CreateLogger(string categoryName)
+		{
+			return new AzureTableLogger(this._connStr) { Source = this._source, Category = categoryName };
+		}
 
         public void Dispose()
         {
@@ -59,13 +66,16 @@ namespace Raydreams.API.Example
 			}
 		}
 
-		#endregion [Properties]
+        /// <summary>The Log Category</summary>
+        public string Category { get; set; }
 
-		/// <summary></summary>
-		/// <param name="top"></param>
-		/// <returns></returns>
-		/// <remarks>querying and sorting Azure Tables is not feasible, get the last 7 days and take only the top 100</remarks>
-		public async Task<List<LogRecord>> ListTop( int top = 100 )
+        #endregion [Properties]
+
+        /// <summary></summary>
+        /// <param name="top"></param>
+        /// <returns></returns>
+        /// <remarks>querying and sorting Azure Tables is not feasible, get the last 7 days and take only the top 100</remarks>
+        public async Task<List<LogRecord>> ListTop( int top = 100 )
 		{
 			// subtract 7 days from today
 			DateTimeOffset since = DateTimeOffset.UtcNow.Subtract( new TimeSpan( 7, 0, 0, 0 ) );
@@ -146,15 +156,18 @@ namespace Raydreams.API.Example
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
-			this.InsertLog(logLevel, null, state.ToString(), null );
+			var argsDict = state as IReadOnlyList<KeyValuePair<string, object>>;
+			var argsArray = argsDict.Take( argsDict.Count - 1).Select(a => $"{a.Key}={a.Value}").ToArray();
+
+            this.InsertLog(logLevel, this.Category, state.ToString(), argsArray );
         }
 
 		/// <summary>All log levels enabled</summary>
 		/// <param name="logLevel"></param>
 		/// <returns></returns>
-        public bool IsEnabled(LogLevel logLevel)
+        public bool IsEnabled( LogLevel logLevel )
         {
-			return true;
+			return logLevel >= this.Level;
         }
 
         public IDisposable BeginScope<TState>(TState state) => default!;

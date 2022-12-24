@@ -74,7 +74,7 @@ namespace Raydreams.API.Example
         /// <returns></returns>
         public string Ping( string msg )
         {
-            this.Logger.LogInformation( $"Pinged = {msg}", $"ip={ClientIP}" );
+            this.Logger.LogInformation( "IP {client} Pinged with '{msg}'", ClientIP, msg );
 
             // default values
             string version = GetVersion();

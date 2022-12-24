@@ -21,7 +21,7 @@ namespace Raydreams.API.Example
 					if ( String.IsNullOrWhiteSpace(env.ConnectionString) )
                         log.AddProvider( new NullLoggerProvider() );
 					else
-						log.AddProvider(new AzureTableLoggerProvider( env.ConnectionString) );
+						log.AddProvider( new AzureTableLoggerProvider(env.ConnectionString, "API Example ") );
                 })
 				.ConfigureServices( (ctx, services) => {
 					// add the Settings as a singleton
