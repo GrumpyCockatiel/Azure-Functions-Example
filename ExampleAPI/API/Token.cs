@@ -26,8 +26,10 @@ namespace Raydreams.API.Example
             // the original state data passed by the client - an encoded object that also says HOW to repond
             string stateStr = req.GetStringValue( "state" );
 
-            // unravel the state param
+            // unravel the state param back
             OAuthState state = OAuthState.Decode( stateStr );
+
+            // using the client ID you can now match this login request to the callback response and store the token on the backend with the User ID
 
             APIResult<TokenResponse> results = new APIResult<TokenResponse>() { ResultCode = APIResultType.Unauthorized };
 

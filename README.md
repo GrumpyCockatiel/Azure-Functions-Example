@@ -64,8 +64,7 @@ Of course, you can make the method fancier and return more details about the env
 
 This example includes a single Ping with the endpoint
 ```
-GET
-http://localhost:7071/api/v1/ping/{optional message}
+GET http://localhost:7071/api/v1/ping/{optional message}
 ```
 Of course, your local port may vary depening on the settings in the project.
 
@@ -81,17 +80,33 @@ A common questions is can you remove or change the default base path of the APIs
 
 This will remove the `api` part of the route from all your calls.
 
+### Log
+
+This POST will pass through to the ILogger inerface and log a message directly
+
+```
+POST http://localhost:7071/api/v1/log
+{
+  "message": "Cry me a river as big as the {river}",
+	"level": "Error",
+  "args":
+  {
+    "river": "Mississippi"
+  }
+}
+```
+the `category` body property is optional and if included will override the default.
+
 ### Get Forecast
 
 An example of pulling data from the backend where that could be a 3rd Pary API, a physical data store, a file in a cloud drive... whatever.
 
 ```
-GET
-http://localhost:7071/api/v1/forecast
+GET http://localhost:7071/api/v1/forecast
 ```
 
 The Mock Service generates random data while the NWS live service will pull data for a hard coded location **HGX/65,97**
-Of course, you can make the location a parameter itself.
+Of course, you can make the location a parameter itself but then just call the NWS API directly. You could however, create a mappaing between codes and certain locations and pass that as a parameter.
 
 ### Insert File
 
@@ -103,6 +118,28 @@ http://localhost:7071/api/v1/file/{fileName?}
 ```
 
 The body of the post request is the raw file bytes and `filename` is the original file name or at least the file name you want to store in the metadata for when it is later downloaded. You can of course use just the orginal or generate a new one. This method is going to generate a random code for the actual blob name.
+
+### Login
+
+If you setup your own Auth0 Tenant and supply the four Auth0 params in settings, calling Login will just return a login URL pre-rolled and sent back in the response as a plain text string. The client can then follow that string to login. You can modify the login to accept several state parameters that can be passed along the entire login lifecycle. For example, on a mobile app you may include the App Installation ID.
+
+For now there are two URL params
+
+```
+GET http://localhost:7071/api/login/{id?}?m=<polling|redirect>&p=<port#>
+```
+
+M is the method to use in the login response. Redirect is the preferable way to do this but requires the client machine to be able to make HTTP request to the local host. Using redirect, then P is the port number the client will go look for the login tokin. If you use polling, you will need to store the token someplace in the backend and the client will then need to go fetch it on its own - hence polling, though a web socket would work here as well.
+
+The ID is optional and usually some client/app instance ID. It is added to the OAuth State param and carried though the login lifecycle.
+
+### Token
+
+The token method is the callback location of Auth0 and not meant to be used by an end client
+
+### Logout
+
+Again, just a pre-rolled passed through to Auth0 to do an explicit logout
 
 ## Program.cs
 
@@ -130,6 +167,6 @@ In the Azure Function resource go to Configuration and add any environment vaiab
 
 ## Azurite
 
-Azurite is very useful to do local debugging. I'll add how to set it up here but the VS Code extension has all the directions.
+Azurite is very useful for local debugging. I'll add how to set it up here but the VS Code extension has all the directions.
 
 Figuring out the connection string for local Azurite can be found [near the bottom of the MSDN](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio).

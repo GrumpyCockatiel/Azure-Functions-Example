@@ -28,10 +28,12 @@ namespace Raydreams.API.Example
                 // get some optional params to pass in state
                 int port = req.GetIntValue("p", 50001);
                 TokenRetrieveType method = req.GetStringValue("m", "polling").GetEnumValue<TokenRetrieveType>(true);
+
+                // set scopes
                 //string scopesStr = req.GetStringValue( "s" ); // scopes
 
                 // if the client id passed in is missing just makes some random ID
-                OAuthState state = new OAuthState( method, port );
+                OAuthState state = new OAuthState( method, port, id );
 
                 // add requested scope to the state
                 //if ( Int32.TryParse( scopesStr, out int scopes ) )

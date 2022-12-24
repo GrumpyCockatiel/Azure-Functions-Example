@@ -23,24 +23,24 @@ namespace Raydreams.API.Example.Model
 
         private int _port = 0;
 
-        private string _id;
+        private string _id = String.Empty;
 
         /// <summary>Parameterless constructor</summary>
         public OAuthState()
-        {
-        }
+        { }
 
         /// <summary>Construct from properties</summary>
         /// <param name="appID"></param>
         /// <param name="type"></param>
         /// <param name="port"></param>
-        public OAuthState( TokenRetrieveType type = TokenRetrieveType.Redirect, int port = 5005 )
+        public OAuthState( TokenRetrieveType type = TokenRetrieveType.Redirect, int port = 5005, string id = null )
         {
             // appID is required - we've haven not chosen a required format
             //this.AppID = ( !String.IsNullOrWhiteSpace( appID ) ) ? appID : new Randomizer().YouTubeID();
 
             this.Method = type;
             this.Port = port;
+            this.ClientID = id;
         }
 
         /// <summary>Port to use with a redirect</summary>
@@ -60,6 +60,22 @@ namespace Raydreams.API.Example.Model
         [JsonProperty( "type" )]
         [JsonConverter( typeof( StringEnumConverter ) )]
         public TokenRetrieveType Method { get; set; } = TokenRetrieveType.Redirect;
+
+        [JsonIgnore]
+        public bool HasID => !String.IsNullOrWhiteSpace( this.ClientID );
+
+        /// <summary>The App/Client Instance ID</summary>
+        /// <remarks>Optional</remarks>
+        [JsonProperty( "clientID" )]
+        public string ClientID
+        {
+            get => this._id;
+            set
+            {
+                if ( !String.IsNullOrWhiteSpace( value ) )
+                    this._id = value;
+            }
+        }
 
         /// <summary>Encodes to BASE64UrlEncoding</summary>
         /// <returns></returns>
