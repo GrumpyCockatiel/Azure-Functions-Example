@@ -5,13 +5,13 @@ using Microsoft.Extensions.Logging;
 namespace Raydreams.API.Example
 {
     /// <summary>Uploads binary data to Blob Storage</summary>
-    public class InsertImageFunction : BaseFunction
+    public class InsertFileFunction : BaseFunction
     {
-        public InsertImageFunction(IDataGateway gate) : base(gate)
+        public InsertFileFunction(IDataGateway gate) : base(gate)
         { }
 
         [Function("InsertFile")]
-        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = "v1/file/{fileName?}")] HttpRequestData req, string fileName, FunctionContext ctx)
+        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "v1/file/{fileName?}")] HttpRequestData req, string fileName, FunctionContext ctx)
         {
             ILogger logger = ctx.GetLogger("API");
             logger.LogInformation($"{GetType().Name} triggered.");

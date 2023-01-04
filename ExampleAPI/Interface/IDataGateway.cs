@@ -27,5 +27,8 @@ namespace Raydreams.API.Example
 
         /// <summary></summary>
         Task<string> InsertFile( Stream fs, string filename );
+
+        /// <summary></summary>
+        Task<RawFileWrapper> GetFile(string blobName);
     }
 }

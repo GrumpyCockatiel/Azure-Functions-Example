@@ -145,13 +145,17 @@ namespace Raydreams.API.Example
             //return (APIResultType.InvalidAppID, token);
         }
 
-        /// <summary></summary>
+        /// <summary>Insert a file into Azure Blob Storage</summary>
         /// <param name="fs"></param>
         /// <param name="container"></param>
         /// <param name="filename"></param>
         /// <returns></returns>
         public async Task<string> InsertFile( Stream fs, string filename )
         {
+            // require the original file name to store with the blob
+            if ( String.IsNullOrWhiteSpace( filename ) )
+                return null;
+
             AzureBlobRepository repo = new AzureBlobRepository(this.Config.FileStore)
             {
                 // set a delegate on how to resolve the MIME Type
@@ -160,12 +164,31 @@ namespace Raydreams.API.Example
 
             // should test to see if we can connect first
 
-            // upload the blob
+            // upload the blob and give it a random blob name
             string url = await repo.StreamBlob( fs, this.Config.DefaultContainer, filename.Trim() );
 
             this.Logger.LogInformation( $"Inserted new file {url}." );
 
             return url;
+        }
+
+        /// <summary>Gets a file from Blob Storage</summary>
+        /// <param name="blobName">The full name of the blob as it is stored. May not be the original filename</param>
+        /// <returns></returns>
+        public async Task<RawFileWrapper> GetFile( string blobName )
+        {
+            AzureBlobRepository repo = new AzureBlobRepository( this.Config.FileStore )
+            {
+                // set a delegate on how to resolve the MIME Type
+                GetMimeType = MimeTypeMap.GetMimeType
+            };
+
+            // upload the blob
+            RawFileWrapper file = await repo.GetRawBlob( this.Config.DefaultContainer, blobName.Trim() );
+
+            this.Logger.LogInformation( $"Retrieved file {file.Filename}." );
+
+            return file;
         }
 
         /// <summary>A test stub for now where you might call a backend data repo</summary>

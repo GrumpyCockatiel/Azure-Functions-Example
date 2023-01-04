@@ -110,7 +110,7 @@ namespace Raydreams.API.Example.Data
         /// <param name="containerName">container name</param>
         /// <param name="blobName">blob name</param>
         /// <returns>Wrapped raw bytes with some metadata</returns>
-        public RawFileWrapper GetRawBlob( string containerName, string blobName )
+        public async Task<RawFileWrapper> GetRawBlob( string containerName, string blobName )
         {
             RawFileWrapper results = new RawFileWrapper();
 
@@ -132,9 +132,9 @@ namespace Raydreams.API.Example.Data
             // set options
             BlobOpenReadOptions op = new BlobOpenReadOptions( false );
 
-            // read the blob to an array
+            // read the blob to an array with blocking
             BlobClient blob = container.GetBlobClient( blobName );
-            using Stream stream = blob.OpenRead( op );
+            using Stream stream = await blob.OpenReadAsync( op );
             results.Data = new byte[stream.Length];
             stream.Read( results.Data, 0, results.Data.Length );
             stream.Close();
@@ -145,6 +145,7 @@ namespace Raydreams.API.Example.Data
             if ( props == null )
                 return results;
 
+            // set the original mime type
             results.ContentType = props.ContentType;
 
             // get a filename

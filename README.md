@@ -4,6 +4,13 @@ This is a boilerplate template for setting-up an Azure Function App using .NET C
 
 Modify the `Program.cs` to inject different backend Gateways and Loggers
 
+## WARNING
+
+This is setup by default to log to Azure Tables. You will need either an Azure Storage Account or Azurite running locally.
+Otherwise, in `Program.cs` just disable the logging by setting it all to NullLogger.
+
+Also, when using Kestrel server locally the default max request size is about 100 MB for uploads. This would be larger in Azure itself.
+
 ## Getting started
 
 You need to add a `local.settings.json` file to your project that looks like the below
