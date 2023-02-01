@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Raydreams.API.Example
 {
-    /// <summary></summary>
+    /// <summary>This is the callback from Auth0 to your app</summary>
     public class CallbackFunction : BaseFunction
     {
         public CallbackFunction( IDataGateway gate ) : base( gate )
@@ -63,7 +63,6 @@ namespace Raydreams.API.Example
 
                 return req.OKResponse<TokenResponse>( results );
             }
-
         }
     }
 }

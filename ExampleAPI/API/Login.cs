@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace Raydreams.API.Example
 {
     /// <summary>The user login function</summary>
-    /// <remarks>This is only to roll a login URL and potentially store login attempts</remarks>
+    /// <remarks>This is only to roll a login URL and potentially store login attempts. The raw login URL to OAuth will be sent back</remarks>
     public class LoginFunction : BaseFunction
     {
         public LoginFunction( IDataGateway gate ) : base( gate )

@@ -26,7 +26,7 @@ namespace Raydreams.API.Example.Data
         /// <summary>Generate a login URL to Auth0</summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public string Login( string url ) => $"{TenantURL}/authorize?client_id={ClientID}&redirect_uri={url}&response_type=code&scope=openid%20profile%20email%20offline_access";
+        public string Login( string url ) => $"{TenantURL}/authorize?client_id={ClientID}&redirect_uri={url}&response_type=code&scope=openid%20profile%20email%20offline_access";//&audience={TenantURL}/api/v2/";
 
         /// <summary>Logout URL</summary>
         public string Logout => $"{TenantURL}/v2/logout&client_id={this.ClientID}&returnTo=";
@@ -65,8 +65,8 @@ namespace Raydreams.API.Example.Data
             return results;
         }
 
-        /// <summary></summary>
-        /// <param name="token"></param>
+        /// <summary>Gets the user's details</summary>
+        /// <param name="token">The access token to send</param>
         /// <returns></returns>
         public async Task<Auth0User> GetUserInfo( string token )
         {

@@ -71,7 +71,7 @@ Of course, you can make the method fancier and return more details about the env
 
 This example includes a single Ping with the endpoint
 ```
-GET http://localhost:7071/api/v1/ping/{optional message}
+GET http://localhost:7071/api/v1/ping&msg={optional message}
 ```
 Of course, your local port may vary depening on the settings in the project.
 
@@ -139,6 +139,26 @@ GET http://localhost:7071/api/login/{id?}?m=<polling|redirect>&p=<port#>
 M is the method to use in the login response. Redirect is the preferable way to do this but requires the client machine to be able to make HTTP request to the local host. Using redirect, then P is the port number the client will go look for the login tokin. If you use polling, you will need to store the token someplace in the backend and the client will then need to go fetch it on its own - hence polling, though a web socket would work here as well.
 
 The ID is optional and usually some client/app instance ID. It is added to the OAuth State param and carried though the login lifecycle.
+
+The returned token would sent back in subsequent headers:
+
+```
+Authorization: Bearer <myAuth0token>
+```
+
+```
+{
+    "resultType":"Success",
+    "result":
+    {
+        "token":"ey...",
+        "userID":"joebob@google.com",
+        "refresh":"_wFXUOymzCuC8PTwUPUe00ZWqsrxmgdt4DtqwYanV5fl6",
+        "expires":"2023-01-31T23:20:57.737936+00:00"
+    },
+    "isSuccess":true
+}
+```
 
 ### Token
 
