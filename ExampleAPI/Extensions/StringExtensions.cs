@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Raydreams.API.Example.Extensions
 {
@@ -6,6 +7,23 @@ namespace Raydreams.API.Example.Extensions
     /// <remarks>Not all data types have been added yet and more are added as they are needed</remarks>
     public static class DataTypeConverter
     {
+        /// <summary>Returns the database to use from a Mongo Connection String</summary>
+        /// <param name="connStr"></param>
+        /// <returns></returns>
+        /// <remarks>mongodb+srv://myuser-rw:password2022!@bimrx-dev.ot79q.mongodb.net/CloudManager-DEV?retryWrites=true&w=majority</remarks>
+        public static string ParseMongoConnStr( this string connStr )
+        {
+            if ( String.IsNullOrWhiteSpace( connStr ) )
+                return null;
+
+            Regex pattern = new Regex( @"mongodb\+srv://.+/(?<db>[-a-zA-Z]+)?.*", RegexOptions.IgnoreCase | RegexOptions.Singleline );
+            Match matches = pattern.Match( connStr );
+
+            var group = matches.Groups["db"];
+
+            return group.Value;
+        }
+
         /// <summary>Parses a string to an Integer with a default</summary>
         /// <param name="def">Default value to return when a fail occurs</param>
         /// <returns>an integer</returns>

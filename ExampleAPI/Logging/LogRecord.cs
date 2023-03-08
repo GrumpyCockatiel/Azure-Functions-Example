@@ -1,5 +1,10 @@
 ﻿using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Raydreams.API.Example.Serializers;
 
 namespace Raydreams.API.Example
 {
@@ -24,6 +29,10 @@ namespace Raydreams.API.Example
         }
 
         /// <summary>Unique ID of the record</summary>
+        [BsonId()]
+        [BsonElement( "_id" )]
+        [BsonGuidRepresentation( GuidRepresentation.Standard )]
+        [JsonIgnore]
         public Guid ID
         {
             get => this._id;
@@ -37,9 +46,13 @@ namespace Raydreams.API.Example
         #region [ Azure Table Required Properties ]
 
         /// <summary>For now always 1</summary>
+        [BsonIgnore]
+        [JsonIgnore]
         public string PartitionKey { get; set; }
 
         /// <summary>Use the internal GUID ID as the Row Key in Azure Tables</summary>
+        [BsonIgnore]
+        [JsonProperty( "id" )]
         public string RowKey
         {
             get { return this._id.ToString(); }
@@ -51,28 +64,46 @@ namespace Raydreams.API.Example
         }
 
         /// <summary>DateTime of the event preferably in UTC</summary>
+        [BsonElement( "timestamp" )]
+        [BsonSerializer( typeof( DateTimeOffsetSerializer ) )]
+        [JsonProperty( "timestamp" )]
         public DateTimeOffset Timestamp { get; set; }
 
         /// <summary></summary>
+        [BsonIgnore]
+        [JsonIgnore]
         public string ETag { get; set; }
 
         #endregion [ Azure Table Required Properties ]
 
         /// <summary>What was the source of the log - the app, service, ...</summary>
+        [BsonElement( "source" )]
+        [JsonProperty( "source" )]
         public string Source { get; set; }
 
         /// <summary>Severity</summary>
         /// <remarks>See enumerated LogLevels in Logging</remarks>l" )]
+        [BsonElement( "level" )]
+        [BsonRepresentation( BsonType.String )]
+        [JsonConverter( typeof( StringEnumConverter ) )]
+        [JsonProperty( "level" )]
         public LogLevel Level { get; set; }
 
         /// <summary>An optional category to help orgnaize log events.</summary>
+        [BsonElement( "category" )]
+        [JsonProperty( "category" )]
         public string Category { get; set; }
 
         /// <summary>The actual log message</summary>
+        [BsonElement( "message" )]
+        [JsonProperty( "message" )]
         public string Message { get; set; }
 
         /// <summary>Additional arguments can be passed as a generic array</summary>
         /// <remarks>Need to create a custom BSON serializer to conver to string[]</remarks>
+        [BsonElement( "args" )]
+        [BsonSerializer( typeof( ObjToStringArraySerializer ) )]
+        [JsonProperty( "args" )]
         public object[] Args { get; set; }
 
         /// <summary></summary>

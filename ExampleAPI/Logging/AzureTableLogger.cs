@@ -30,6 +30,7 @@ namespace Raydreams.API.Example
     }
 
     /// <summary>Logs to an Azure Table</summary>
+    /// <remarks>Hardcoded to a Logs Table Name</remarks>
     public class AzureTableLogger : AzureTableRepository<LogRecord>, ILogger
 	{
 		private LogLevel _level = LogLevel.Trace;

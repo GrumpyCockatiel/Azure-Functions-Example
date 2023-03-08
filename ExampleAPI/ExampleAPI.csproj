@@ -13,11 +13,12 @@
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.14.1" />
     <PackageReference Include="Microsoft.Azure.Cosmos.Table" Version="1.0.8" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.10.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.7.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.0.13" />
     <PackageReference Include="Azure.Storage.Files.Shares" Version="12.12.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.19.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Extensions\" />
@@ -26,6 +27,7 @@
     <None Remove="Interface\" />
     <None Remove="Logic\" />
     <None Remove="API\" />
+    <None Remove="Serializers\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
@@ -42,5 +44,6 @@
     <Folder Include="Interface\" />
     <Folder Include="Logic\" />
     <Folder Include="API\" />
+    <Folder Include="Serializers\" />
   </ItemGroup>
 </Project>

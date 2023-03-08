@@ -10,7 +10,10 @@
         public static readonly string EnvironmentKey = "ASPNETCORE_ENVIRONMENT";
 
         /// <summary></summary>
-        public static readonly string ConnectionStringKey = "connStr";
+        public static readonly string LogConnStringKey = "connStr";
+
+        /// <summary></summary>
+        public static readonly string DBNameKey = "dbName";
 
         /// <summary></summary>
         public static readonly string CallbackURLKey = "callback";
@@ -39,7 +42,8 @@
         public EnvironmentSettings()
         {
             // load settings
-            this.ConnectionString = Environment.GetEnvironmentVariable(ConnectionStringKey);
+            this.LogConnectionString = Environment.GetEnvironmentVariable( LogConnStringKey );
+            this.DatabaseName = Environment.GetEnvironmentVariable( DBNameKey );
             this.CallbackURL = Environment.GetEnvironmentVariable( CallbackURLKey );
             this.IDClientID = Environment.GetEnvironmentVariable( ClientIDKey );
             this.IDClientSecret = Environment.GetEnvironmentVariable( ClientSecretKey );
@@ -87,8 +91,11 @@
         /// <summary>The actual key used to load the environment</summary>
         public string EnvironmentKeyValue { get; set; }
 
-        /// <summary>The connection string to the Storage Account</summary>
-        public string ConnectionString { get; set; }
+        /// <summary>The connection string used in logging if any</summary>
+        public string LogConnectionString { get; set; }
+
+        /// <summary>The name of the primary DB to use</summary>
+        public string DatabaseName { get; set; }
 
         /// <summary>The login callback URL</summary>
         public string CallbackURL { get; set; } = "http://localhost:7071/api/token";
