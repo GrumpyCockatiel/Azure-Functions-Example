@@ -287,6 +287,34 @@ namespace Raydreams.API.Example.Extensions
 
             return resp;
         }
+
+        /// <summary>Based on the environment will handle the correct error repsonse for debugging and logging</summary>
+        /// <typeparam name="T">The normal return type of the function</typeparam>
+        /// <param name="logger">The MS function logger</param>
+        /// <param name="exp">exception</param>
+        /// <returns>In PROD returns a 500, otherwise a 200 with a Debug message</returns>
+        public static HttpResponseData ReponseError( this HttpRequestData req, Exception exp, ILogger logger )
+        {
+            var type = Environment.GetEnvironmentVariable( "env" );
+            EnvironmentType env = type.GetEnumValue<EnvironmentType>( EnvironmentType.Unknown, true );
+
+            string error = exp.ToLogMsg( true );
+
+            if ( env == EnvironmentType.Production )
+            {
+                logger.LogError( error, null );
+                return req.CreateResponse( HttpStatusCode.InternalServerError );
+            }
+
+            APIResult<bool> results = new APIResult<bool> { ResultObject = false, ResultCode = APIResultType.Exception, Debug = error };
+
+            HttpResponseData resp = req.CreateResponse( HttpStatusCode.OK );
+            resp.Headers.Add( "Content-Type", "text/json; charset=utf-8" );
+            resp.WriteString( JsonConvert.SerializeObject( results ) );
+
+            return resp;
+        }
+
     }
 }
 

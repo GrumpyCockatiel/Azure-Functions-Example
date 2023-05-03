@@ -26,16 +26,16 @@ namespace Raydreams.API.Example
 
                 this.Gateway.AddHeaders(req);
                 results.ResultObject = this.Gateway.Ping(msg);
+
+                if ( results.ResultObject != null )
+                    results.ResultCode = APIResultType.Success;
+
+                return req.OKResponse( results );
             }
             catch (System.Exception exp)
             {
-                return req.ReponseError(results, exp, logger);
+                return req.ReponseError(exp, logger);
             }
-
-            if (results.ResultObject != null)
-                results.ResultCode = APIResultType.Success;
-
-            return req.OKResponse(results);
         }
     }
 }

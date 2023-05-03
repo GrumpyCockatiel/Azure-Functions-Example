@@ -28,16 +28,17 @@ namespace Raydreams.API.Example
 
                 // upload the file - container name is hard coded in config for now
                 results.ResultObject = await this.Gateway.GetFile( blobName.Trim() );
+
+                if ( results.ResultObject.IsValid )
+                    results.ResultCode = APIResultType.Success;
+
+                return req.BlobResponse( results.ResultObject );
             }
             catch ( Exception exp )
             {
-                return req.ReponseError( results, exp, logger );
+                return req.ReponseError( exp, logger );
             }
 
-            if ( results.ResultObject.IsValid )
-                results.ResultCode = APIResultType.Success;
-
-            return req.BlobResponse( results.ResultObject );
         }
     }
 

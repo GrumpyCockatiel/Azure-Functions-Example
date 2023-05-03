@@ -13,7 +13,6 @@ namespace Raydreams.API.Example
         [Function("GetForecast")]
         public async Task<HttpResponseData> Run( [HttpTrigger( AuthorizationLevel.Anonymous, "get", Route = "v1/forecast" )] HttpRequestData req, FunctionContext ctx )
         {
-
             // log that this function was triggered
             ILogger logger = ctx.GetLogger( "API" );
             logger.LogInformation( $"{GetType().Name} triggered." );
@@ -29,16 +28,16 @@ namespace Raydreams.API.Example
 
                 this.Gateway.AddHeaders( req );
                 results.ResultObject = await this.Gateway.GetWeather();
+
+                if ( results.ResultObject != null )
+                    results.ResultCode = APIResultType.Success;
+
+                return req.OKResponse( results );
             }
             catch ( System.Exception exp )
             {
-                return req.ReponseError( results, exp, logger );
+                return req.ReponseError( exp, logger );
             }
-
-            if ( results.ResultObject != null )
-                results.ResultCode = APIResultType.Success;
-
-            return req.OKResponse( results );
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Raydreams.API.Example.Logging
 {
@@ -29,7 +30,7 @@ namespace Raydreams.API.Example.Logging
                     logger = new MongoLoggerProvider( connStr, connStr.ParseMongoConnStr(), source );
                     break;
                 default:
-                    logger = new NullLoggerProvider();
+                    logger = NullLoggerProvider.Instance;
                     break;
             }
 

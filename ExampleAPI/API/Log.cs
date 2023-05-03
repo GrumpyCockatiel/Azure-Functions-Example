@@ -3,6 +3,7 @@ using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Raydreams.API.Example.Extensions;
 
 namespace Raydreams.API.Example
 {
@@ -19,20 +20,21 @@ namespace Raydreams.API.Example
             ILogger logger = ctx.GetLogger( "API" );
             logger.LogInformation( $"{GetType().Name} triggered." );
 
-            string requestBody = await req.ReadAsStringAsync();
-            dynamic data = JsonConvert.DeserializeObject( requestBody );
-            string msg = data?.message;
-            string lvl = data?.level;
-            string category = data?.category;
-
-            // replace the category if one was sent
-            if ( !String.IsNullOrWhiteSpace(category) )
-                logger = ctx.GetLogger( category );
-
             APIResult<bool> results = new APIResult<bool>();
 
             try
             {
+                // get all the values
+                string requestBody = await req.ReadAsStringAsync();
+                dynamic data = JsonConvert.DeserializeObject( requestBody );
+                string msg = data?.message;
+                string lvl = data?.level;
+                string category = data?.category;
+
+                // replace the category if one was sent
+                if ( !String.IsNullOrWhiteSpace( category ) )
+                    logger = ctx.GetLogger( category );
+
                 Dictionary<string, string> args = new Dictionary<string, string>();
 
                 // check for args
@@ -48,18 +50,18 @@ namespace Raydreams.API.Example
                 LogLevel level = lvl.GetEnumValue<LogLevel>( LogLevel.Information );
 
                 this.Gateway.AddHeaders( req );
-
                 logger.Log( level, msg, args.Values.ToArray() );
+
+                results.ResultObject = true;
+                results.ResultCode = APIResultType.Success;
+
+                return req.OKResponse( results );
             }
-            catch ( System.Exception exp )
+            catch ( Exception exp )
             {
-                return req.ReponseError( results, exp, logger );
+                logger.LogError( exp, null, null );
+                return req.ReponseError( exp, logger );
             }
-
-            results.ResultObject = true;
-            results.ResultCode = APIResultType.Success;
-
-            return req.OKResponse( results );
         }
     }
 }

@@ -28,16 +28,18 @@ namespace Raydreams.API.Example
 
                 // upload the file - container name is hard coded in config for now
                 results.ResultObject = await this.Gateway.InsertFile(file, fileName.Trim());
+
+                if ( !String.IsNullOrWhiteSpace( results.ResultObject ) )
+                    results.ResultCode = APIResultType.Success;
+
+                return req.OKResponse( results );
             }
             catch (Exception exp)
             {
-                return req.ReponseError(results, exp, logger);
+                return req.ReponseError(exp, logger);
             }
 
-            if (!String.IsNullOrWhiteSpace(results.ResultObject))
-                results.ResultCode = APIResultType.Success;
-
-            return req.OKResponse(results);
+            
         }
     }
 
